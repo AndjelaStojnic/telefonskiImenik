@@ -107,7 +107,6 @@ async function verifyEmail(req, res) {
 
     user.emailVerified = true;
     await user.save();
-
     res.send('Email je uspešno verifikovan. Možete nastaviti registraciju.');
   } catch (error) {
     res.status(400).send('Nevažeći ili istekao token.');
@@ -116,7 +115,7 @@ async function verifyEmail(req, res) {
 
 async function updateUser(req, res) {
   try {
-    const { ime, email, lozinka } = req.body;
+    const { ime, email, lozinka, profilnaSlika, telefon, adresa } = req.body;
     const user = await User.findByPk(req.params.id);
     if (!user) return res.status(404).json({ error: 'Korisnik nije pronađen' });
 
@@ -127,9 +126,18 @@ async function updateUser(req, res) {
       }
     }
 
-    await user.update({ ime, email, lozinka });
+    await user.update({
+      ime,
+      email,
+      lozinka,
+      profilnaSlika,
+      telefon,
+      adresa,
+    });
+
     res.json(userWithoutPassword(user));
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Greška pri ažuriranju korisnika' });
   }
 }

@@ -13,11 +13,17 @@ export default function Login() {
     setError("");
 
     try {
-      await axios.post(
+      const res = await axios.post(
         "http://localhost:5000/api/users/login",
         { email, lozinka },
         { withCredentials: true }
       );
+
+      const { token, user } = res.data;
+
+      // ✅ Spasi token i userId u localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", user.id);
 
       navigate("/dashboard");
     } catch (err: any) {

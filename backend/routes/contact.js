@@ -4,6 +4,10 @@ const contactController = require('../controllers/contact');
 
 // CRUD rute za kontakte
 router.post('/', contactController.createContact);
+
+// 🔁 Ova mora ići prije router.get('/:id') jer bi inače Express 'user' smatrao da je :id
+router.get('/user/:userId', contactController.getContactsByUserId);
+
 router.get('/', contactController.getAllContacts);
 router.get('/:id', contactController.getContactById);
 router.put('/:id', contactController.updateContact);

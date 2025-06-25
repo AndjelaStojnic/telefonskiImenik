@@ -24,10 +24,26 @@ const User = sequelize.define('user', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  emailVerified: {  // Polje za verifikaciju mejla
+  emailVerified: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false,
+  },
+  profilnaSlika: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  telefon: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  adresa: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  bio: {
+    type: DataTypes.TEXT,
+    allowNull: true,
   },
 }, {
   tableName: 'users',
@@ -46,7 +62,6 @@ const User = sequelize.define('user', {
   }
 });
 
-// Metod za proveru lozinke
 User.prototype.proveriLozinku = async function (lozinka) {
   return await bcrypt.compare(lozinka, this.lozinka);
 };
